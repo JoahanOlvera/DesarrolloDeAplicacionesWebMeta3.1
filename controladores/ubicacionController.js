@@ -25,7 +25,7 @@ export const obtenerUbicaciones = async (req, res) => {
 // Obtener una ubicación por su ID
 export const obtenerUbicacionPorId = async (req, res) => {
     const identificador = parseInt(req.params.id);
-    const ubicacion = ubicacionesGuardadas.find(u => u.id === identificador);
+    const ubicacion = ubicacionesGuardadas.find(u => parseInt(u.id) === identificador);
     if (ubicacion) {
         await res.json(ubicacion);
     } else {
@@ -36,15 +36,15 @@ export const obtenerUbicacionPorId = async (req, res) => {
 // Crear una nueva ubicación
 export const crearUbicacion = async (req, res) => {
     const { id, descripcion, activosAsociadosId, imagen } = req.body;
-    
     // Comprobar si la ubicación ya existe
-    const ubicacionExistente = ubicacionesGuardadas.find(u => u.id === id);
+    const ubicacionExistente = ubicacionesGuardadas.find(u => parseInt(u.id) === parseInt(id));
+    console.log(ubicacionExistente);
     if (ubicacionExistente) {
         return await res.status(400).json({ message: "La ubicación ya existe" });
     }
 
     // Crear una nueva instancia de Ubicacion
-    const nuevaUbicacion = new Ubicacion(id, descripcion, activosAsociadosId, imagen);
+    const nuevaUbicacion = new Ubicacion(parseInt(id), descripcion, activosAsociadosId, imagen);
 
     // Agregar la nueva ubicación a la lista y guardar en el almacenamiento local
     ubicacionesGuardadas.push(nuevaUbicacion);
@@ -57,7 +57,7 @@ export const crearUbicacion = async (req, res) => {
 // Eliminar una ubicación por su ID
 export const eliminarUbicacionPorId = async (req, res) => {
     const { id } = req.params;
-    const index = ubicacionesGuardadas.findIndex(ubicacion => ubicacion.id === parseInt(id));
+    const index = ubicacionesGuardadas.findIndex(ubicacion => parseInt(ubicacion.id) === parseInt(id));
     if (index !== -1) {
         ubicacionesGuardadas.splice(index, 1);
         guardarUbicacionesEnLocalStorage();
@@ -70,11 +70,14 @@ export const eliminarUbicacionPorId = async (req, res) => {
 // Actualizar una ubicación por su ID
 export const actualizarUbicacionPorId = async (req, res) => {
     const { id } = req.params;
-    const { descripcion, activosAsociados, imagen } = req.body;
-    const ubicacionExistente = ubicacionesGuardadas.find(ubicacion => ubicacion.id === parseInt(id));
+    const { descripcion, activosAsociadosId, imagen } = req.body;
+    console.log(req.params);
+    console.log(descripcion, activosAsociadosId, imagen);
+    const ubicacionExistente = ubicacionesGuardadas.find(ubicacion => parseInt(ubicacion.id) === parseInt(id));
     if(ubicacionExistente){
+        console.log("La ubicacion existe");
         ubicacionExistente.descripcion = descripcion;
-        ubicacionExistente.activosAsociados = activosAsociados;
+        ubicacionExistente.activosAsociadosId = activosAsociadosId;
         ubicacionExistente.imagen = imagen;
         guardarUbicacionesEnLocalStorage(); 
         await res.status(200).json(ubicacionExistente); 
@@ -88,7 +91,7 @@ export const parchearUbicacionPorId = async (req, res) => {
     const { id } = req.params;
     const camposActualizados = req.body;
 
-    const ubicacionExistente = ubicacionesGuardadas.find(ubicacion => ubicacion.id === parseInt(id));
+    const ubicacionExistente = ubicacionesGuardadas.find(ubicacion => parseInt(ubicacion.id) === parseInt(id));
 
     if(ubicacionExistente) {
         Object.keys(camposActualizados).forEach(key => {

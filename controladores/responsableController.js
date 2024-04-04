@@ -49,11 +49,11 @@ export const eliminarResponsablePorId = async (req, res) => {
 // Crear un nuevo responsable
 export const crearResponsables = async (req, res) => {
     const { id, numeroEmpleado, nombre, activosCustodiados, imagen } = req.body;
-    const responsableExistente = responsablesGuardados.find(u => u.id === id);
+    const responsableExistente = responsablesGuardados.find(u => parseInt(u.id) === parseInt(id));
     if (responsableExistente) {
         return res.status(400).json({ message: "El responsable ya existe" });
     }
-    const nuevoResponsable = new Responsable(id, numeroEmpleado, nombre, activosCustodiados, imagen);
+    const nuevoResponsable = new Responsable(parseInt(id), parseInt(numeroEmpleado), nombre, activosCustodiados, imagen);
     responsablesGuardados.push(nuevoResponsable);
     guardarResponsablesEnLocalStorage();
     await res.status(201).json(nuevoResponsable);
@@ -63,9 +63,9 @@ export const crearResponsables = async (req, res) => {
 export const actualizarResponsablePorId = async (req, res) => {
     const { id } = req.params;
     const {numeroEmpleado, nombre, activosCustodiados, imagen } = req.body;        
-    const responsableExistente = responsablesGuardados.find(responsable => responsable.id === parseInt(id));
+    const responsableExistente = responsablesGuardados.find(responsable => parseInt(responsable.id) === parseInt(id));
     if(responsableExistente){
-        responsableExistente.numeroEmpleado = numeroEmpleado;
+        responsableExistente.numeroEmpleado = parseInt(numeroEmpleado);
         responsableExistente.nombre = nombre;
         responsableExistente.activosCustodiados = activosCustodiados;
         responsableExistente.imagen = imagen;
@@ -80,7 +80,7 @@ export const actualizarResponsablePorId = async (req, res) => {
 export const parchearResponsablePorId = async (req, res) => {
     const { id } = req.params;
     const camposActualizados = req.body;
-    const responsableExistente = responsablesGuardados.find(responsable => responsable.id === parseInt(id));
+    const responsableExistente = responsablesGuardados.find(responsable => parseInt(responsable.id) === parseInt(id));
 
     if(responsableExistente) {
         Object.keys(camposActualizados).forEach(key => {

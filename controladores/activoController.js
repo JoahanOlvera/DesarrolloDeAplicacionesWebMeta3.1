@@ -38,14 +38,15 @@ export const obtenerActivosPorId = async (req, res) => {
 //ya exista se indica fallo, de no ser así se crea un nuevo activo y se agrega a la lista
 export const crearActivo = async (req, res) => {
     const { id, numeroSerie, numeroInventario, tipo, descripcion, ubicacionId, responsableId, imagen } = req.body;
-    const activoExistente = activosGuardados.find(u => u.id === id);
+    console.log(req.body);
+    const activoExistente = activosGuardados.find(u => parseInt(u.id) === parseInt(id));
     if (activoExistente) {
         return res.status(400).json({ message: "El activo ya existe" });
     }
     const nuevoActivo = new Activo(
-        id,
-        numeroSerie,
-        numeroInventario,
+        parseInt(id),
+        parseInt(numeroSerie),
+        parseInt(numeroInventario),
         tipo,
         descripcion,
         ubicacionId,
@@ -79,8 +80,8 @@ export const actualizarActivoPorId = async (req, res) => {
     const {numeroSerie, numeroInventario, tipo, descripcion, ubicacionId, responsableId, imagen } = req.body;        
     const activoExistente = activosGuardados.find(activo => activo.id === parseInt(id));
     if(activoExistente){
-        activoExistente.numeroSerie = numeroSerie;
-        activoExistente.numeroInventario = numeroInventario;
+        activoExistente.numeroSerie = parseInt(numeroSerie);
+        activoExistente.numeroInventario = parseInt(numeroInventario);
         activoExistente.tipo = tipo;
         activoExistente.descripcion = descripcion;
         activoExistente.ubicacionId = ubicacionId;

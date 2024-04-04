@@ -1,1 +1,1 @@
-[{"id":3,"numeroEmpleado":3,"nombre":"Hugo","imagen":"imagen3.png"},{"id":4,"numeroEmpleado":15,"nombre":"Roberto","activosCustodiados":[1,4,6],"imagen":"imagen3.png"},{"id":5,"numeroEmpleado":5,"nombre":"Rodrigo Robles","activosCustodiados":[1],"imagen":"imagen5.png"}]
+[{"id":4,"numeroEmpleado":15,"nombre":"Roberto","activosCustodiados":[1,4,6],"imagen":"imagen3.png"},{"id":5,"numeroEmpleado":5,"nombre":"Rodrigo Robles","activosCustodiados":[1],"imagen":"imagen5.png"},{"id":1,"numeroEmpleado":2,"nombre":"","activosCustodiados":"","imagen":"imagenActualizada.png"}]
