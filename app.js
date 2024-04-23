@@ -5,11 +5,26 @@ import bodyParser from "body-parser"; // Importa bodyParser para analizar los cu
 import activosRouter from './rutas/activos.js';
 import ubicacionesRouter from './rutas/ubicaciones.js';
 import responsablesRouter from './rutas/responsables.js';
+import activosRouterBD from './rutas/activosBD.js';
+import {sequelize} from "./database.js";
+import responsablesRouterBD from './rutas/responsablesBD.js';
+import ubicacionesRouterBD from './rutas/ubicacionesBD.js';
+
 import https from "https";
 import fs from "fs";
 import { obtenerActivos, obtenerActivosPorId, crearActivo, eliminarActivoPorId, actualizarActivoPorId, parchearActivoPorId } from './controladores/activoController.js';
 import { obtenerUbicaciones, crearUbicacion, obtenerUbicacionPorId, eliminarUbicacionPorId, actualizarUbicacionPorId, parchearUbicacionPorId} from "./controladores/ubicacionController.js";
 import { obtenerResponsables, crearResponsables, obtenerResponsablePorId, eliminarResponsablePorId, actualizarResponsablePorId, parchearResponsablePorId } from "./controladores/responsableController.js";
+
+async function syncDatabase() {
+  try {
+    await sequelize.sync({ alter: true });
+    console.log('Base de datos sincronizada correctamente');
+  } catch (error) {
+    console.error('Error al sincronizar la base de datos:', error);
+  }
+}
+
 
 // Crea una instancia de la aplicación Express
 const app = express();
@@ -26,9 +41,13 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   }));
-app.use('/activos', activosRouter);
-app.use('/ubicaciones', ubicacionesRouter);
-app.use('/responsables', responsablesRouter);
+
+app.use('/activos', activosRouterBD);
+app.use('/responsables', responsablesRouterBD);
+app.use('/ubicaciones', ubicacionesRouterBD);
+//app.use('/activos', activosRouter);
+//app.use('/ubicaciones', ubicacionesRouter);
+//app.use('/responsables', responsablesRouter);
 
 
 // Middlewares
@@ -61,6 +80,7 @@ app.use('/responsables', responsablesRouter);
 // Exporta la aplicación Express para poder usarla en otros archivos
 
 const httpsServer = https.createServer({ key: key, cert: cert}, app);
+syncDatabase();
 httpsServer.listen(4000, () => {
   console.log("Servidor HTTPS en puerto 4000");
 });
