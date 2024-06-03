@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Meta 3.1 Aplicacion web",
   "main": "index.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
@@ -11,8 +11,11 @@
   "author": "Joahan Olvera Mariscal",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
-    "express": "^4.18.3",
+    "express": "^4.19.2",
+    "fs": "^0.0.1-security",
+    "https": "^1.0.0",
     "mysql2": "^3.9.4",
     "node-localstorage": "^3.0.5",
     "nodemon": "^2.0.12",

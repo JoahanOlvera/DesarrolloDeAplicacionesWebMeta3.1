@@ -2,18 +2,20 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Ejemplos', {
+    await queryInterface.createTable('Ubicaciones', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
-        type: Sequelize.STRING
+      descripcion: {
+        type: Sequelize.STRING,
+        allowNull: true
       },
-      lastName: {
-        type: Sequelize.STRING
+      imagen: {
+        type: Sequelize.BLOB('long'), // Uso correcto de LONG BLOB
+        allowNull: true
       },
       createdAt: {
         allowNull: false,
@@ -26,6 +28,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Ejemplos');
+    await queryInterface.dropTable('Ubicaciones');
   }
 };

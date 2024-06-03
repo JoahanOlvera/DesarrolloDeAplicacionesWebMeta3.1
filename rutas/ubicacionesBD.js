@@ -1,28 +1,32 @@
-import express from 'express';
-import bodyParser from "body-parser"; 
-import { deleteUbicacionById, insertUbicacion, selectUbicacionPorId, selectUbicaciones, updateUbicacionById } from "../controladores/ubicacionControllerBD.js";
+const express = require ('express');
+const bodyParser = require ('body-parser'); 
+//import { deleteUbicacionById, insertUbicacion, selectUbicacionPorId, selectUbicaciones, updateUbicacionById } from "../controladores/ubicacionControllerBD.js";
+const { ingresarUbicaciones, obtenerUbicaciones, selectUbicacionPorId, updateUbicacionById, deleteUbicacionById } = require('../controladores/ubicacionControllerBDNuevo.js');
 
-const router = express.Router();
-router.use(bodyParser.json());
+const ubicacionesRouterBD = express.Router();
+ubicacionesRouterBD.use(bodyParser.json());
 
-router.get('/', (req, res) => {
-   selectUbicaciones(req, res);
+ubicacionesRouterBD.get('/', (req, res) => {
+    obtenerUbicaciones(req, res);
 });
 
-router.get('/buscarPorId/:id', (req, res) => {
+ubicacionesRouterBD.post('/', (req, res) => {
+    ingresarUbicaciones(req, res);
+});
+
+ubicacionesRouterBD.get('/buscarPorId/:id', (req, res) => {
     selectUbicacionPorId(req, res);
 });
 
-router.delete('/eliminarPorId/:id', (req, res) => {
+ubicacionesRouterBD.delete('/eliminarPorId/:id', (req, res) => {
     deleteUbicacionById(req, res);
 });
 
-router.post('/', (req, res) => {
-    insertUbicacion(req, res);
-});
-
-router.put('/actualizarPorId/:id', (req, res) => {
+ubicacionesRouterBD.put('/actualizarPorId/:id', (req, res) => {
     updateUbicacionById(req, res);
 });
+/*
 
-export default router;
+*/
+//export default router;
+module.exports = ubicacionesRouterBD

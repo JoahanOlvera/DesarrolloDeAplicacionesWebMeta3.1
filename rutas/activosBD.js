@@ -1,28 +1,29 @@
-import express from 'express';
-import bodyParser from "body-parser"; 
-import { selectActivos, selectActivoPorId ,insertActivos, deleteActivoById, updateActivoById } from "../controladores/activosControllerBD.js";
+const express = require ('express');
+const bodyParser = require ('body-parser');
+const {selectActivos, selectActivoPorId, insertActivo, deleteActivoById, updateActivoById} = require ("../controladores/activosControllerBDNuevo.js"); 
+//import { selectActivos, selectActivoPorId ,insertActivos, deleteActivoById, updateActivoById } from "../controladores/activosControllerBD.js";
 
-const router = express.Router();
-router.use(bodyParser.json());
+const activoRouterBD = express.Router();
+activoRouterBD.use(bodyParser.json());
 
-router.get('/', (req, res) => {
+activoRouterBD.get('/', (req, res) => {
    selectActivos(req, res);
 });
 
-router.get('/buscarPorId/:id', (req, res) => {
+activoRouterBD.get('/buscarPorId/:id', (req, res) => {
     selectActivoPorId(req, res);
 });
 
-router.delete('/eliminarPorId/:id', (req, res) => {
+activoRouterBD.delete('/eliminarPorId/:id', (req, res) => {
     deleteActivoById(req, res);
 });
 
-router.post('/', (req, res) => {
-    insertActivos(req, res);
+activoRouterBD.post('/', (req, res) => {
+    insertActivo(req, res);
 });
 
-router.put('/actualizarPorId/:id', (req, res) => {
+activoRouterBD.put('/actualizarPorId/:id', (req, res) => {
     updateActivoById(req, res);
 });
 
-export default router;
+module.exports = activoRouterBD

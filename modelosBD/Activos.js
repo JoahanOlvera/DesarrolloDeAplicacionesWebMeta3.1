@@ -27,6 +27,22 @@ export const Activo = sequelize.define('Activo', {
         allowNull: false,
         primaryKey: false,
     },
+    idUbicacion: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+        model: 'ubicaciones', // Nombre de la tabla de Ubicaciones
+        key: 'id'
+        }
+    },
+    idResponsable: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'responsables', // Nombre de la tabla de Responsables
+      key: 'id'
+    }
+    },
     imagen: {
         type: DataTypes.STRING, 
         allowNull: false,

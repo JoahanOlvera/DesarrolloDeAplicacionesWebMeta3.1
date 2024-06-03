@@ -1,5 +1,7 @@
 import {DataTypes} from "sequelize";
 import {sequelize} from "../database.js";
+import { Ubicacion } from "./Ubicaciones.js";
+import { TagResponsableUbicacion } from "./TagResponsableUbicacion.js";
 
 export const Responsable = sequelize.define('Responsable', {
     id: {
@@ -23,3 +25,5 @@ export const Responsable = sequelize.define('Responsable', {
         primaryKey: false,
     }
 });
+
+Responsable.belongsToMany(Ubicacion, { through: TagResponsableUbicacion, foreignKey: 'id' });

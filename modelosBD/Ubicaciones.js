@@ -1,7 +1,9 @@
 import {DataTypes} from "sequelize";
 import {sequelize} from "../database.js";
+import { Responsable } from "./Responsables.js";
+import { TagResponsableUbicacion } from "./TagResponsableUbicacion.js";
 
-export const Ubicacion = sequelize.define('Ubicacion', {
+export const Ubicacion = sequelize.define('Ubicaciones', {
     id: {
         type: DataTypes.INTEGER, 
         allowNull: false,
@@ -16,3 +18,5 @@ export const Ubicacion = sequelize.define('Ubicacion', {
         allowNull: false,
     },
 });
+
+//Ubicacion.hasMany(Responsable, { through: TagResponsableUbicacion, foreignKey: 'id' });

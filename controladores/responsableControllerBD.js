@@ -1,6 +1,6 @@
 //import {sequelize} from "..database.js";
 import { Responsable } from "../modelosBD/Responsables.js";
-import { Tags } from "../modelosBD/Tags.js";
+import { TagResponsableUbicacion } from "../modelosBD/TagResponsableUbicacion.js"
 import express from 'express';
 import bodyParser from "body-parser"; 
 
@@ -48,14 +48,18 @@ export const deleteResponsableById = async (req, res) => {
 export const insertResponsable = async(req, res) => {
     try {
       console.log("Body del req: ", req.body);
-      const { id, numeroEmpleado, nombre, imagen} = req.body;
+      const { id, numeroEmpleado, nombre, idUbicacion, imagen} = req.body;
       const nuevoResponsable = await Responsable.create({
         id: id,
         numeroEmpleado: numeroEmpleado,
         nombre: nombre,
         imagen: imagen
       });
-      await res.status(201).json(nuevoResponsable);
+      const nuevaRelacion = await TagResponsableUbicacion.create({
+        idUbicacion: idUbicacion,
+        idResponsable: id
+      });
+      await res.status(201).json(nuevoResponsable, nuevaRelacion);
     } catch (error) {
       console.error('Error al buscar responsables:', error);
       res.status(500).json({ error: 'Error al crear activo y tags' });
