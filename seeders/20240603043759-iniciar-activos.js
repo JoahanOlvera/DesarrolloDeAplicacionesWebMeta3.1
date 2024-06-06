@@ -27,8 +27,8 @@ module.exports = {
         tipo: 'Monitor',
         descripcion: 'Samsung 24 inch',
         imagen: Buffer.from(imageBase64, 'base64'), // Puedes usar la misma imagen para todos los registros o diferentes
-        responsableId: 3,
-        ubicacionId: 3,
+        responsableId: 4,
+        ubicacionId: 4,
         createdAt: new Date(),
         updatedAt: new Date()
       }

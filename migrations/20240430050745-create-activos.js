@@ -35,20 +35,22 @@ module.exports = {
       },
       responsableId: {
         type: Sequelize.INTEGER,
+        allowNull: true, // Permitir valores nulos
         references: {
           model: 'Responsables',
           key: 'id'
         },
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL', // Cambiar a SET NULL
         onUpdate: 'CASCADE'
       },
       ubicacionId: {
         type: Sequelize.INTEGER,
+        allowNull: true, // Permitir valores nulos
         references: {
           model: 'Ubicaciones',
           key: 'id'
         },
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL', // Cambiar a SET NULL
         onUpdate: 'CASCADE'
       },
       createdAt: {
